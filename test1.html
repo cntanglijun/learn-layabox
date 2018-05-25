@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="./LayaAirJS_1.7.19.1_beta/js/libs/laya.core.js"></script>
+    <script src="./LayaAirJS_1.7.19.1_beta/js/libs/laya.webgl.js"></script>
+  </head>
+  <body>
+    <script>
+      (function () {
+        var Sprite = Laya.Sprite
+        var Stage = Laya.Stage
+        var Texture = Laya.Texture
+        var Browser = Laya.Browser
+        var Handler = Laya.Handler
+        var WebGL = Laya.WebGL
+
+        ;(function () {
+          Laya.init(Browser.clientWidth, Browser.clientHeight, WebGL)
+
+          Laya.stage.alignV = Stage.ALIGN_MIDDLE
+          Laya.stage.alignH = Stage.ALIGN_CENTER
+
+          Laya.stage.scaleMode = 'showall'
+          Laya.stage.bgColor = '#232628'
+
+          showApe()
+        }());
+
+        function showApe() {
+          var ape = new Sprite()
+
+          Laya.stage.addChild(ape)
+          ape.loadImage('./res/apes/monkey3.png')
+
+          var monkey2 = './res/apes/monkey2.png'
+
+          Laya.loader.load(monkey2, Handler.create(this, function () {
+            var t = Laya.loader.getRes(monkey2)
+            var ape = new Sprite()
+
+            ape.graphics.drawTexture(t, 0, 0)
+            Laya.stage.addChild(ape)
+
+            ape.pos(200, 0)
+          }))
+        }
+      }())
+    </script>
+  </body>
+</html>
