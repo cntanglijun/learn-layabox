@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>遮罩-放大镜</title>
+    <script src="./LayaAirJS_1.7.19.1_beta/js/libs/laya.core.js"></script>
+    <script src="./LayaAirJS_1.7.19.1_beta/js/libs/laya.webgl.js"></script>
+  </head>
+  <body>
+    <script>
+      (function() {
+        var Sprite = Laya.Sprite
+        var Stage = Laya.Stage
+        var Browser = Laya.Browser
+        var Handler = Laya.Handler
+        var WebGL = Laya.WebGL
+
+        var maskSp
+        var bg2
+
+        ;(function() {
+
+          // 不支持WebGL时自动切换至Canvas
+          Laya.init(1136, 640, WebGL)
+
+          Laya.stage.alignV = Stage.ALIGN_MIDDLE
+          Laya.stage.alignH = Stage.ALIGN_CENTER
+
+          Laya.stage.scaleMode = "showall"
+          Laya.stage.bgColor = "#232628"
+
+          // 加载背景
+          Laya.loader.load('./res/bg2.png', Handler.create(this, setup))
+        }());
+
+        function setup() {
+
+          // 定义背景实例
+          var bg = new Sprite()
+
+          // 加载背景图片
+          bg.loadImage('./res/bg2.png')
+
+          // 添加背景到舞台中
+          Laya.stage.addChild(bg);
+
+          // 定义背景 2 实例
+          bg2 = new Sprite()
+
+          // 加载背景图片
+          bg2.loadImage('./res/bg2.png')
+
+          // 添加背景 2 到舞台中
+          Laya.stage.addChild(bg2)
+
+          // 设置背景 2 的比例
+          bg2.scale(3, 3)
+
+          // 创建mask
+          maskSp = new Sprite()
+
+          // 加载 mask 图片
+          maskSp.loadImage('./res/mask.png')
+
+          // 设置 maskSp 中心点（mask.png 100 * 100）
+          maskSp.pivot(50, 50)
+
+          // 设置 bg2 的 mask 遮罩为 maskSp
+          // mask 的详细介绍：https://layaair.ldc.layabox.com/api/?category=Core&class=laya.display.Sprite#mask
+          bg2.mask = maskSp
+
+          // 监听舞台的 mousemove 事件
+          Laya.stage.on("mousemove", this, onMouseMove)
+        }
+
+        function onMouseMove() {
+          bg2.x = -Laya.stage.mouseX * 2
+          bg2.y = -Laya.stage.mouseY * 2
+
+          maskSp.x = Laya.stage.mouseX
+          maskSp.y = Laya.stage.mouseY
+        }
+      }())
+    </script>
+  </body>
+</html>
