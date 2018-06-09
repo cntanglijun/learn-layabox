@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Layabox 示例学习</title>
+  </head>
+  <body>
+    <h1>Layabox 示例学习</h1>
+    <div id="root"></div>
+    <script>
+      (function () {
+        var rootElement = document.getElementById('root')
+
+        var list = [
+          {
+            name: '显示图片',
+            link: 'test1'
+          },
+          {
+            name: '容器',
+            link: 'test2'
+          },
+          {
+            name: '旋转缩放',
+            link: 'test3'
+          },
+          {
+            name: '根据数据绘制路径',
+            link: 'test4'
+          },
+          {
+            name: '遮罩-放大镜',
+            link: 'test5'
+          }
+        ]
+
+        rootElement.innerHTML = createListTpl(list)
+
+        function createListTpl(list) {
+          var result = []
+
+          for (var i = 0; i < list.length; i += 1) {
+            result[i] = '<li><a href="./' + list[i].link + '.html" target="_blank">' + list[i].name + '</a></li>'
+          }
+
+          i = null
+
+          result.unshift('<ul>')
+          result.push('</ul>')
+
+          return result.join('')
+        }
+      }())
+    </script>
+  </body>
+</html>
