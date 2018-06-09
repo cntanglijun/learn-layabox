@@ -1,0 +1,13 @@
+branches:
+  only:
+  - master
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+script:
+  - bash .travis/deploy.sh
+notifications:
+  email: false

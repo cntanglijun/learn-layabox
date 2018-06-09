@@ -1,0 +1,22 @@
+{
+  "name": "learn-layabox",
+  "private": true,
+  "description": "这个仓库用于记录我学习 layabox 的示例代码",
+  "scripts": {
+    "build": "rm -rf public && mkdir public && cp -r src/* public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cntanglijun/learn-layabox.git"
+  },
+  "keywords": [
+    "learn-layabox"
+  ],
+  "author": "cntanglijun",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cntanglijun/learn-layabox/issues"
+  },
+  "homepage": "https://github.com/cntanglijun/learn-layabox#readme"
+}
