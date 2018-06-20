@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <head>
+    <meta charset='utf-8'>
+    <title>新手引导</title>
+    <script src='./LayaAirJS_1.7.19.1_beta/js/libs/laya.core.js'></script>
+    <script src='./LayaAirJS_1.7.19.1_beta/js/libs/laya.webgl.js'></script>
+  </head>
+  <body>
+    <script>
+      (function() {
+        var Sprite = Laya.Sprite
+        var Stage = Laya.Stage
+        var HitArea = Laya.HitArea
+        var WebGL = Laya.WebGL
+
+        var guideContainer, tipContainer, hitArea, interactionArea
+
+        var guideStep = 0
+
+      	var guideSteps = [
+          {
+            x: 151,
+            y: 575,
+            radius: 150,
+            tip: './res/guide/help6.png',
+            tipx: 200,
+            tipy: 250
+          },
+          {
+            x: 883,
+            y: 620,
+            radius: 100,
+            tip: './res/guide/help4.png',
+            tipx: 730,
+            tipy: 380
+          },
+          {
+            x: 1128,
+            y: 583,
+            radius: 110,
+            tip: './res/guide/help3.png',
+            tipx: 900,
+            tipy: 300
+          }
+        ]
+
+        ;(function() {
+          Laya.init(1285, 727)
+          Laya.stage.alignH = Stage.ALIGN_CENTER
+          Laya.stage.alignV = Stage.ALIGN_MIDDLE
+
+          // 实例化游戏容器
+          var gameContainer = new Sprite()
+          gameContainer.loadImage('./res/guide/crazy_snowball.png')
+          Laya.stage.addChild(gameContainer)
+
+          // 实例化引导容器
+          guideContainer = new Sprite()
+
+          // 缓存引导容器为静态图像
+          guideContainer.cacheAs = 'bitmap'
+          Laya.stage.addChild(guideContainer)
+          gameContainer.on('click', this, nextStep)
+
+          // 为引导容器设置遮罩
+          var maskArea = new Sprite()
+          maskArea.alpha = 0.5
+          maskArea.graphics.drawRect(0, 0, Laya.stage.width, Laya.stage.height, '#000000')
+          guideContainer.addChild(maskArea)
+
+          // 实例化交互区域
+          interactionArea = new Sprite()
+
+          // 设置叠加模式
+          interactionArea.blendMode = 'destination-out'
+          guideContainer.addChild(interactionArea)
+
+          // 实例化点击区域
+          hitArea = new HitArea()
+          hitArea.hit.drawRect(0, 0, Laya.stage.width, Laya.stage.height, '#000000')
+
+          // 为引导容器设置点击区域
+          guideContainer.hitArea = hitArea
+
+          // 引导容器可接受鼠标事件
+          guideContainer.mouseEnabled = true
+
+          // 实例化提示容器
+          tipContainer = new Sprite()
+          Laya.stage.addChild(tipContainer)
+
+          nextStep()
+        }());
+
+        function nextStep() {
+          if (guideStep == guideSteps.length) {
+
+            // 最后一步提示之后移除引导容器和提示容器
+            Laya.stage.removeChild(guideContainer)
+            Laya.stage.removeChild(tipContainer)
+          } else {
+            var step = guideSteps[guideStep++]
+
+            // 清除不可点击区域
+            hitArea.unHit.clear()
+
+            // 绘制不可点击区域
+            hitArea.unHit.drawCircle(step.x, step.y, step.radius, '#000000')
+
+            // 清空交互区域
+            interactionArea.graphics.clear()
+
+            // 绘制交互区域
+            interactionArea.graphics.drawCircle(step.x, step.y, step.radius, '#000000')
+
+            // 清空提示容器
+            tipContainer.graphics.clear()
+
+            // 加载新的提示内容
+            tipContainer.loadImage(step.tip)
+
+            // 设置提示内容显示位置
+            tipContainer.pos(step.tipx, step.tipy)
+          }
+        }
+
+      }())
+    </script>
+  </body>
+</html>
